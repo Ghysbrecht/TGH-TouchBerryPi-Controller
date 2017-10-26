@@ -7,23 +7,25 @@ PiTouch::PiTouch(){
 
 
 int PiTouch::getVendorID(){
-  char buffer[1];
-  i2c->readRegister(0,buffer,1);
-  return (int)buffer[0];
+  return getRegisterValue(0);
 }
 
 Key PiTouch::getButtonState(){
+  return (Key)getRegisterValue(3);
+}
+
+int PiTouch::getRegisterValue(int addr){
   char buffer[1];
-  i2c->readRegister(3,buffer,1);
-  return (Key)buffer[0];
+  i2c->readRegister(addr,buffer,1);
+  return (int)buffer[0];
 }
 
 void PiTouch::calibrate(){
-
+  i2c->writeRegister(56, 255);
 }
 
 void PiTouch::reset(){
-
+  i2c->writeRegister(57, 255);
 }
 
 std::string PiTouch::getButtonName(Key key){

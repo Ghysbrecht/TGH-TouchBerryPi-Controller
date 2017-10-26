@@ -7,20 +7,23 @@ int main(void){
   std::cout << "Starting I2C program" << std::endl;
   PiTouch piTouch;
 
-  //Wait a second before doing things
-  //sleep(3);
-
-  //Reading from that address
+  //Reading ID
   std::cout << "Reading ID..." << std::endl;
   std::cout << piTouch.getVendorID() << std::endl;
 
+  //Reading the buttonstates
   std::cout << "Reading Buttonstate..." << std::endl;
-  while(1){
+  bool state = true;
+  while(state){
     std::cout << PiTouch::getButtonName(piTouch.getButtonState()) << std::endl;
+    if(PiTouch::getButtonName(piTouch.getButtonState()) == "X") state = false;
     usleep(100000);
   }
 
   std::cout << "End of program" << std::endl;
+
+  piTouch.calibrate();
+  piTouch.reset();
 
   return 0;
 }

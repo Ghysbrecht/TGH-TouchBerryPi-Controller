@@ -22,6 +22,7 @@ private:
 
 public:
   PiTouch();
+  int getRegisterValue(int addr);
   int getVendorID();
   Key getButtonState();
   void calibrate();

@@ -15,4 +15,5 @@ class PiI2C{
     void busWrite(char *buffer, int length);
     void busRead(char *buffer, int length);
     void readRegister(int address, char *buffer2, int length);
+    void writeRegister(int address, char data);
 };

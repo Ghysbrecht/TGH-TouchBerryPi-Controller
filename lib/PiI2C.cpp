@@ -59,3 +59,8 @@ void PiI2C::readRegister(int address, char *buffer2, int length){
   busWrite(buffer,sizeof(buffer));
   busRead(buffer2, length);
 }
+
+void PiI2C::writeRegister(int address, char data){
+  char buffer[] = {(char)address, data}; 
+  busWrite(buffer,sizeof(buffer));
+}
