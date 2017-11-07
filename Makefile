@@ -1,30 +1,35 @@
-# The C++ compiler
-PREFIX=/home/thomas/rpi-tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-
-CC=$(PREFIX)g++
+# The compiler to use
+# CCPREFIX=/home/thomas/rpi-tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-
+CC=$(CCPREFIX)g++
 
-# The compiler flags
-CFLAGS=-Wall -c
+# Compiler flags
+CFLAGS=-c -Wall -std=c++11
+    # -c: Compile or assemble the source files, but do not link. The linking stage simply is not done. The ultimate output is in the form of an object file for each source file.
+    # -Wall: This enables all the warnings about constructions that some users consider questionable, and that are easy to avoid (or modify to prevent the warning), even in conjunction with macros.
 
-#
-EXECUTABLE=hello
+# LDFLAGS=
 
-all: $(EXECUTABLE)
+# Libraries
+LIBS=-lrestclient-cpp
 
-$(EXECUTABLE): main.o PiI2C.o PiTouch.o PiLed.o
-	$(CC)  main.o PiI2C.o PiTouch.o PiLed.o -o $(EXECUTABLE)
+# Name of executable output
+TARGET=touchshield
+SRCDIR=src
+BUILDDIR=bin
 
-main.o: main.cpp
-	$(CC) $(CFLAGS) main.cpp
+OBJS := $(patsubst %.cpp,%.o,$(shell find $(SRCDIR) -name '*.cpp'))
 
-PiI2C.o: lib/PiI2C.cpp
-	$(CC) $(CFLAGS) lib/PiI2C.cpp
+all: makebuildir $(TARGET)
 
-PiTouch.o: lib/PiTouch.cpp
-	$(CC) $(CFLAGS) lib/PiTouch.cpp
+$(TARGET) : $(OBJS)
+	$(CC) $(LDFLAGS) -o $(BUILDDIR)/$@ $(OBJS) $(LIBS)
 
-PiLed.o: lib/PiLed.cpp
-	$(CC) $(CFLAGS) lib/PiLed.cpp
+%.o : %.cpp
+	$(CC) $(CFLAGS) $< -o $@
 
+clean :
+	rm -rf $(BUILDDIR)
+	rm -f $(OBJS)
 
-clean:
-	rm -f *.o $(EXECUTABLE)
+makebuildir:
+	mkdir -p $(BUILDDIR)
