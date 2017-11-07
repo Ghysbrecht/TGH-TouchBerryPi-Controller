@@ -10,8 +10,8 @@ EXECUTABLE=hello
 
 all: $(EXECUTABLE)
 
-$(EXECUTABLE): main.o PiI2C.o PiTouch.o
-	$(CC)  main.o PiI2C.o PiTouch.o -o $(EXECUTABLE)
+$(EXECUTABLE): main.o PiI2C.o PiTouch.o PiLed.o
+	$(CC)  main.o PiI2C.o PiTouch.o PiLed.o -o $(EXECUTABLE)
 
 main.o: main.cpp
 	$(CC) $(CFLAGS) main.cpp
@@ -21,6 +21,9 @@ PiI2C.o: lib/PiI2C.cpp
 
 PiTouch.o: lib/PiTouch.cpp
 	$(CC) $(CFLAGS) lib/PiTouch.cpp
+
+PiLed.o: lib/PiLed.cpp
+	$(CC) $(CFLAGS) lib/PiLed.cpp
 
 
 clean:
