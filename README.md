@@ -1,6 +1,6 @@
 # TouchBerryPi Controller by TGH
 
-This cpp project is made to use the ToucheBerryiPi raspberry pi hat to control the Thumper, a 6 wheel RC car.
+This cpp project is made to use the ToucheBerryiPi raspberry pi hat to control the Thumper, a 6 wheel RC car. Made by Thomas Ghysbrecht.
 
 ---
 
